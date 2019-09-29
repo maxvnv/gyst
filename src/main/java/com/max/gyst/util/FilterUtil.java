@@ -5,15 +5,15 @@ import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
 
-public class FilterMaster<T> {
+public class FilterUtil<T> {
 
     private List<T> source;
 
-    public FilterMaster(List<T> expenses) {
+    public FilterUtil(List<T> expenses) {
         this.source = expenses;
     }
 
-    public FilterMaster<T> filterIfNotNull(Function<T, Object> extractor, Object target) {
+    public FilterUtil<T> filterIfNotNull(Function<T, Object> extractor, Object target) {
         if (target == null) {
             return this;
         }

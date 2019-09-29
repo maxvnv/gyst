@@ -1,36 +1,27 @@
 package com.max.gyst.category;
 
-import static com.max.gyst.category.Category.*;
+import javax.persistence.*;
 
-public enum Subcategory {
+@Entity(name = "SUBCATEGORY")
+public class Subcategory {
 
-    HEETS(CIGARETTES),
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+    private String name;
 
-    HOME(GROCERIES),
-
-    RENT(BILLS),
-    FLAT_BILLS(BILLS),
-    INTERNET(BILLS),
-    ENTERTAINMENT(BILLS),
-
-    TAXI(TRANSPORT),
-    PUBLIC(TRANSPORT),
-
-    SQUASH(SPORT),
-
-    SNACK(FOOD),
-    WORK_LUNCH(FOOD),
-    RESTAURANT(FOOD),
-    CAFE(FOOD),
-    DELIVERY(FOOD);
-
-    private Category category;
-
-    Subcategory(Category category) {
-        this.category = category;
+    public Long getId() {
+        return id;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getName() {
+        return name;
+    }
+
+
+    Subcategory withName(String name) {
+        this.name = name;
+        return this;
     }
 }

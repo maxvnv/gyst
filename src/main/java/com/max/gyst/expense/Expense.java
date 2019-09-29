@@ -1,37 +1,44 @@
 package com.max.gyst.expense;
 
-import com.max.gyst.category.Category;
 import com.max.gyst.category.Subcategory;
+import com.max.gyst.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-import static javax.persistence.EnumType.STRING;
 
 @Entity
 public class Expense {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "OWNING_USER")
+    private User user;
+
     private LocalDateTime dateTime = LocalDateTime.now();
+
     @NotBlank
+    @Column(name = "TITLE")
     private String title;
     @NotNull
+    @Column(name = "AMOUNT")
     private Double amount;
-    @Enumerated(STRING)
-    @NotNull
-    private Category category;
-    @Enumerated(STRING)
+
+    @ManyToOne
+    @JoinColumn(name = "SUBCATEGORY_ID")
     private Subcategory subcategory;
 
     public Long getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public LocalDateTime getDateTime() {
@@ -46,11 +53,27 @@ public class Expense {
         return amount;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
     public Subcategory getSubcategory() {
         return subcategory;
+    }
+
+    public Expense withUser(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public Expense withTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public Expense withAmount(Double amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public Expense withSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
+        return this;
     }
 }

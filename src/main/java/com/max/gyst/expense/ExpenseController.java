@@ -1,44 +1,62 @@
 package com.max.gyst.expense;
 
 import com.max.gyst.category.Category;
+import com.max.gyst.category.CategoryNotFoundException;
 import com.max.gyst.category.Subcategory;
-import com.max.gyst.util.FilterMaster;
+import com.max.gyst.user.User;
+import com.max.gyst.user.UserNotFoundException;
+import com.max.gyst.user.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
+import java.util.Collection;
 import java.util.List;
+
+import static java.lang.Long.parseLong;
 
 @RestController
 public class ExpenseController {
 
     private final ExpensesRepository expensesRepository;
+    private final UserRepository userRepository;
 
-    public ExpenseController(ExpensesRepository expensesRepository) {
+    public ExpenseController(ExpensesRepository expensesRepository, UserRepository userRepository) {
         this.expensesRepository = expensesRepository;
+        this.userRepository = userRepository;
     }
 
-    @PatchMapping("expense")
-    public ResponseEntity enterExpense(@RequestBody @Valid Expense expense) {
-        expensesRepository.save(expense);
+    @PostMapping("expense")
+    public ResponseEntity enterExpense(@RequestHeader String userId, @RequestBody @Valid ExpenseDto expense) {
+        User user = userRepository.findById(parseLong(userId)).orElseThrow(UserNotFoundException::new);
+        Subcategory subcategoryToPersist = user.getCategories().stream()
+                .map(Category::getSubcategory)
+                .flatMap(Collection::stream)
+                .filter(subcategory -> subcategory.getId().equals(expense.getSubcategoryId()))
+                .findFirst()
+                .orElseThrow(CategoryNotFoundException::new);
 
-        return ResponseEntity.created(URI.create(String.format("/expense/%s", expense.getId()))).build();
+
+        Expense expenseToPersist = new Expense()
+                .withTitle(expense.getTitle())
+                .withAmount(expense.getAmount())
+                .withUser(user)
+                .withSubcategory(subcategoryToPersist);
+
+        expensesRepository.save(expenseToPersist);
+
+        return ResponseEntity.ok(expenseToPersist);
     }
 
-    @GetMapping("expense")
-    public List<Expense> getExpenses(
-            @RequestParam(required = false, name = "category") Category category,
-            @RequestParam(required = false, name = "subcategory") Subcategory subcategory
-    ) {
-        return new FilterMaster<>(expensesRepository.findAll())
-                .filterIfNotNull(Expense::getCategory, category)
-                .filterIfNotNull(Expense::getSubcategory, subcategory)
-                .getSource();
-    }
 
     @GetMapping("expense/{id}")
     public Expense getExpense(@PathVariable(value = "id", required = false) Long id) {
         return expensesRepository.findById(id).orElseThrow(ExpenseNotFoundException::new);
+    }
+
+    @GetMapping("expense")
+    public List<Expense> getExpense(@RequestHeader String userId) {
+        User user = userRepository.findById(parseLong(userId)).orElseThrow(UserNotFoundException::new);
+        return expensesRepository.findAllByUser(user);
     }
 }

@@ -1,6 +1,6 @@
 package com.max.gyst;
 
-import com.max.gyst.util.FilterMaster;
+import com.max.gyst.util.FilterUtil;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FilterMasterTest {
+public class FilterUtilTest {
 
     @Test
     public void shouldFilter() {
@@ -20,7 +20,7 @@ public class FilterMasterTest {
 
         List<TestMasterObject> testObjects = Stream.of(testMasterObject1, testMasterObject2).collect(Collectors.toList());
 
-        FilterMaster<TestMasterObject> underTest = new FilterMaster<>(testObjects);
+        FilterUtil<TestMasterObject> underTest = new FilterUtil<>(testObjects);
         List<TestMasterObject> result = underTest
                 .filterIfNotNull(TestMasterObject::getTestObject, new TestObject(2, "vika"))
                 .getSource();
