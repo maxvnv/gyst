@@ -53,6 +53,7 @@ public class Expense {
         return amount;
     }
 
+    @NotNull
     public Subcategory getSubcategory() {
         return subcategory;
     }

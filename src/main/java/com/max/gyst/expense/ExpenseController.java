@@ -14,9 +14,10 @@ import java.util.Collection;
 import java.util.List;
 
 import static java.lang.Long.parseLong;
+import static java.util.stream.Collectors.toList;
 
 @RestController
-public class ExpenseController {
+public class ExpenseController { 
 
     private final ExpensesRepository expensesRepository;
     private final UserRepository userRepository;
@@ -55,8 +56,14 @@ public class ExpenseController {
     }
 
     @GetMapping("expense")
-    public List<Expense> getExpense(@RequestHeader String userId) {
+    public List<ExpenseDto> getExpense(@RequestHeader String userId) {
         User user = userRepository.findById(parseLong(userId)).orElseThrow(UserNotFoundException::new);
-        return expensesRepository.findAllByUser(user);
+        return expensesRepository.findAllByUser(user).stream()
+                .map(this::toExpenseDto)
+                .collect(toList());
+    }
+
+    private ExpenseDto toExpenseDto(Expense expense) {
+        return new ExpenseDto(expense.getTitle(), expense.getAmount(), expense.getSubcategory().getId(), expense.getDateTime());
     }
 }

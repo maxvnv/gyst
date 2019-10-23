@@ -4,7 +4,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-.idea/
+.idea/*.xml
 
 # Generated files
 .idea/**/contentModel.xml
@@ -31,10 +31,10 @@
 # IntelliJ
 out/
 
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
 
 ### Java ###
 # Compiled class file
