@@ -14,10 +14,11 @@ build:
 
 
 deploy:
-  image: docker
+  image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
   script:
     - ls -l
-    - service docker start
     - docker image build -t gyst .
     - docker image ls
   stage: deploy
