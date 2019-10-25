@@ -1,22 +1,23 @@
-image: "openjdk:8"
+image: "ringcentral/maven"
 
 stages:
-  - build
   - test
+  - build
   - deploy
 
 before_script:
   - echo "hello this is before script execution"
+
+test:
+  script:
+    - mvn clean test
+  stage: test
 
 build:
   script:
     - echo "hi this is build"
   stage: build
 
-test:
-  script:
-    - echo "hi this is test"
-  stage: test
 
 deploy:
   script:
