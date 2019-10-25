@@ -17,6 +17,7 @@ deploy:
   image: docker
   script:
     - ls -l
+    - service docker start
     - docker image build -t gyst .
     - docker image ls
   stage: deploy
