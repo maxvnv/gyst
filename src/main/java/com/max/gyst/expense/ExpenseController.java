@@ -17,7 +17,7 @@ import static java.lang.Long.parseLong;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-public class ExpenseController { 
+public class ExpenseController {
 
     private final ExpensesRepository expensesRepository;
     private final UserRepository userRepository;
