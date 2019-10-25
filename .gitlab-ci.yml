@@ -1,25 +1,21 @@
 image: "ringcentral/maven"
 
 stages:
-  - test
   - build
   - deploy
 
-before_script:
-  - echo "hello this is before script execution"
-
-test:
-  script:
-    - mvn clean test
-  stage: test
-
 build:
   script:
-    - echo "hi this is build"
+    - mvn clean package
+  artifacts:
+    paths:
+      - target/
   stage: build
 
 
 deploy:
   script:
-    - echo "hi this is hello"
+    - ls -l
+    - image build -t gyst .
+    - docker image ls
   stage: deploy
