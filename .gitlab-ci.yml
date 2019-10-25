@@ -1,16 +1,24 @@
 image: "openjdk:8"
 
+stages:
+  - build
+  - test
+  - deploy
+
 before_script:
   - echo "hello this is before script execution"
 
 build:
   script:
     - echo "hi this is build"
+  stage: build
 
 test:
   script:
     - echo "hi this is test"
+  stage: test
 
 deploy:
   script:
     - echo "hi this is hello"
+  stage: deploy
