@@ -16,6 +16,6 @@ build:
 deploy:
   script:
     - ls -l
-    - image build -t gyst .
+    - docker image build -t gyst .
     - docker image ls
   stage: deploy
