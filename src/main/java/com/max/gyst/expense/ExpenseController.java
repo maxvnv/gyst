@@ -56,7 +56,7 @@ public class ExpenseController {
     }
 
     @GetMapping("expense")
-    public List<ExpenseDto> getExpense(@RequestHeader String userId) {
+    public List<ExpenseDto> getExpenses(@RequestHeader String userId) {
         User user = userRepository.findById(parseLong(userId)).orElseThrow(UserNotFoundException::new);
         return expensesRepository.findAllByUser(user).stream()
                 .map(this::toExpenseDto)
