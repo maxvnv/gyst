@@ -19,7 +19,6 @@ public class Subcategory {
         return name;
     }
 
-
     Subcategory withName(String name) {
         this.name = name;
         return this;

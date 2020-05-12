@@ -1,7 +1,6 @@
 package com.max.gyst.category;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.max.gyst.user.User;
+import com.google.common.annotations.VisibleForTesting;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,14 +19,9 @@ public class Category {
     @Column(name = "NAME")
     private String name;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private User user;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
-    private List<Subcategory> subcategory = new ArrayList<>();
+    private List<Subcategory> subcategories = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -37,22 +31,23 @@ public class Category {
         return name;
     }
 
-    public User getUser() {
-        return user;
+    public List<Subcategory> getSubcategories() {
+        return subcategories;
     }
-
 
     Category withName(String name) {
         this.name = name;
         return this;
     }
 
-    Category withUser(User user) {
-        this.user = user;
+    public Category withSubcategories(List<Subcategory> subcategory) {
+        this.subcategories = subcategory;
         return this;
     }
 
-    public List<Subcategory> getSubcategory() {
-        return subcategory;
+    @VisibleForTesting
+    public Category withId(Long id) {
+        this.id = id;
+        return this;
     }
 }

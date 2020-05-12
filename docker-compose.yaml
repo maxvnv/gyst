@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  gyst:
+    build: .
+    ports:
+      - "80:8080"

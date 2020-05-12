@@ -36,4 +36,8 @@ class ExpenseDto {
     public Long getSubcategoryId() {
         return subcategoryId;
     }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
 }
