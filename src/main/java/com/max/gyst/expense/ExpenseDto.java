@@ -7,16 +7,16 @@ import java.time.LocalDateTime;
 class ExpenseDto {
 
     @JsonProperty("title")
-    private String title;
+    private final String title;
 
     @JsonProperty("amount")
-    private Double amount;
+    private final Double amount;
 
     @JsonProperty("subcategoryId")
-    private Long subcategoryId;
+    private final Long subcategoryId;
 
     @JsonProperty("dateTime")
-    private LocalDateTime dateTime;
+    private final LocalDateTime dateTime;
 
     public ExpenseDto(String title, Double amount, Long subcategoryId, LocalDateTime dateTime) {
         this.title = title;

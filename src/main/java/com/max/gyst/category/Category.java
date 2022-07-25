@@ -9,12 +9,10 @@ import java.util.List;
 
 @Entity
 public class Category {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
-
     @NotBlank
     @Column(name = "NAME")
     private String name;

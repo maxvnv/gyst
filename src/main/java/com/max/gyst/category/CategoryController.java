@@ -14,12 +14,12 @@ public class CategoryController {
     }
 
     @PostMapping("category")
-    public Category addCategory(@RequestBody String name) {
+    public Category createCategory(@RequestBody String name) {
         return categoryService.createCategoryWithName(name);
     }
 
     @PostMapping("category/{categoryId}/subcategory")
-    public Category addSubcategory(@PathVariable Long categoryId, @RequestBody String name) {
+    public Category createSubcategory(@PathVariable Long categoryId, @RequestBody String name) {
         Category category = categoryService.getCategoryById(categoryId);
         category.getSubcategories().add(new Subcategory().withName(name));
         return categoryService.updateCategory(category);

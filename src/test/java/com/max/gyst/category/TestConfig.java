@@ -1,8 +1,10 @@
 package com.max.gyst.category;
 
 import com.max.gyst.Application;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.isA;
@@ -16,8 +18,8 @@ import static org.mockito.Mockito.when;
 })
 public class TestConfig {
 
-    //    @Bean
-//    @Primary
+    @Bean
+    @Primary
     public CategoryRepository testCategoryRepository(TestCategoryRepositoryHelper testCategoryRepositoryHelper) {
         CategoryRepository categoryRepositoryMock = mock(CategoryRepository.class);
         when(categoryRepositoryMock.save(isA(Category.class))).then(

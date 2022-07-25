@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestCategoryRepositoryHelper {
 
     private final AtomicLong idGenerator = new AtomicLong(1);
-    private Map<Long, Category> savedCategories = new HashMap<>();
+    private final Map<Long, Category> savedCategories = new HashMap<>();
 
     public List<Category> getSavedCategories() {
         return new ArrayList<>(savedCategories.values());

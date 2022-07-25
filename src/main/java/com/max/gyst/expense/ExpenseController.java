@@ -18,7 +18,10 @@ public class ExpenseController {
     private final ExpensesRepository expensesRepository;
     private final CategoryRepository categoryRepository;
 
-    public ExpenseController(ExpensesRepository expensesRepository, CategoryRepository categoryRepository) {
+    public ExpenseController(
+            ExpensesRepository expensesRepository,
+            CategoryRepository categoryRepository
+    ) {
         this.expensesRepository = expensesRepository;
         this.categoryRepository = categoryRepository;
     }
